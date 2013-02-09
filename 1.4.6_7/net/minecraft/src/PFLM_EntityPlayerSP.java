@@ -46,42 +46,31 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 		super(par1Minecraft, par2World, par3Session, par4NetClientHandler);
 		/*125//*/sendQueue = par4NetClientHandler;
 		if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm) {
-			mod_PFLM_PlayerFormLittleMaid.textureArmor0 = new String[4];
-			mod_PFLM_PlayerFormLittleMaid.textureArmor1 = new String[4];
-			mod_PFLM_PlayerFormLittleMaid.newModel();
 			rand = new Random();
 			mod_PFLM_PlayerFormLittleMaid.gotcha = this;
 			if (mod_PFLM_PlayerFormLittleMaid.textureName == null) {
-				if (mod_PFLM_PlayerFormLittleMaid.defaultTexture == null) {
+				if (mod_PFLM_PlayerFormLittleMaid.textureName == null) {
 					mod_PFLM_PlayerFormLittleMaid.textureName = "default";
 				} else {
-					if (!PFLM_Gui.noSaveFlag) {
-						mod_PFLM_PlayerFormLittleMaid.setTextureName(mod_PFLM_PlayerFormLittleMaid.defaultTexture);
-					} else {
-						mod_PFLM_PlayerFormLittleMaid.setTextureName(mod_PFLM_PlayerFormLittleMaid.textureName);
-					}
+					mod_PFLM_PlayerFormLittleMaid.setTextureName(mod_PFLM_PlayerFormLittleMaid.textureName);
 				}
 			}
 			if (mod_PFLM_PlayerFormLittleMaid.textureArmorName == null) {
-				if (mod_PFLM_PlayerFormLittleMaid.defaultTextureArmorName == null) {
+				if (mod_PFLM_PlayerFormLittleMaid.textureArmorName == null) {
 					mod_PFLM_PlayerFormLittleMaid.setTextureArmorName(mod_PFLM_PlayerFormLittleMaid.textureName);
 				} else {
-					if (!PFLM_Gui.noSaveFlag) {
-						mod_PFLM_PlayerFormLittleMaid.setTextureArmorName(mod_PFLM_PlayerFormLittleMaid.defaultTextureArmorName);
-					} else {
-						mod_PFLM_PlayerFormLittleMaid.setTextureArmorName(mod_PFLM_PlayerFormLittleMaid.textureArmorName);
-					}
+					mod_PFLM_PlayerFormLittleMaid.setTextureArmorName(mod_PFLM_PlayerFormLittleMaid.textureArmorName);
 				}
 			}
 			mod_PFLM_PlayerFormLittleMaid.setMaidColor(mod_PFLM_PlayerFormLittleMaid.maidColor);
 			mod_PFLM_PlayerFormLittleMaid.setTextureValue();
-			if (!mod_PFLM_PlayerFormLittleMaid.onlineMode) {
+			if (mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline) {
 				skinUrl = null;
 				setPlayerTexture(mod_PFLM_PlayerFormLittleMaid.texture);
 			}
 			// System.out.println("PFLM_EntityPlayerSP mod_PFLM_PlayerFormLittleMaid.texture="+mod_PFLM_PlayerFormLittleMaid.texture);
 			if (mod_PFLM_PlayerFormLittleMaid.isModelSize
-					&& !mod_PFLM_PlayerFormLittleMaid.onlineMode) {
+					&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline) {
 				setSize(0.6F, 1.8F);
 				resetHeight();
 			}
@@ -91,7 +80,7 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 		mod_PFLM_PlayerFormLittleMaid.setFirstPersonHandResetFlag(true);
 		mod_PFLM_PlayerFormLittleMaid.clearPlayers();
 		rnd = new Random();
-		/*//b173delete
+/*//b173delete
 		keyBindForward = mc.gameSettings.keyBindForward;
 		keyBindBack = mc.gameSettings.keyBindBack;
 		keyBindLeft = mc.gameSettings.keyBindLeft;
@@ -103,7 +92,7 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 		super.wakeUpPlayer(flag, flag1, flag2);
 		if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm
 				&& mod_PFLM_PlayerFormLittleMaid.isModelSize
-				&& !mod_PFLM_PlayerFormLittleMaid.onlineMode
+				&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline
 				&& !mod_PFLM_PlayerFormLittleMaid.isSmartMoving) {
 			if (!flag && flag1 && flag2) {
 				preparePlayerToSpawn();
@@ -119,7 +108,7 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 	protected boolean pushOutOfBlocks(double par1, double par3, double par5) {
 		if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm
 				&& mod_PFLM_PlayerFormLittleMaid.isModelSize
-				&& !mod_PFLM_PlayerFormLittleMaid.onlineMode
+				&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline
 				&& !mod_PFLM_PlayerFormLittleMaid.isSmartMoving) {
 			int i = MathHelper.floor_double(par1);
 			int j = MathHelper.floor_double(par3);
@@ -128,16 +117,8 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 			double d1 = par3 - (double) j;
 			double d2 = par5 - (double) k;
 			int j1 = 0;
-			// j1 = mod_PFLM_PlayerFormLittleMaid.textureModel[0] != null ? (int)
-			// mod_PFLM_PlayerFormLittleMaid.textureModel[0].getHeight() : 1;
-			if (mod_PFLM_PlayerFormLittleMaid.textureModel[0] == null) {
-				j1 = 1;
-				// System.out.println("pushOutOfBlocks mod_PFLM_PlayerFormLittleMaid.textureModel[0] = null");
-			} else {
-				j1 = (int) mod_PFLM_PlayerFormLittleMaid.getHeight();
-			}
+			j1 = (int) mod_PFLM_PlayerFormLittleMaid.getHeight();
 			boolean g = worldObj.isBlockNormalCube(i, j + j1, k);
-			// System.out.println("pushOutOfBlocks j1="+j1+" g="+g);
 			if (g) {
 				boolean flag = true;
 				boolean flag1 = true;
@@ -148,31 +129,22 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 				int n;
 				for (n = j1; n > -1 && flag == true; n = n - 1) {
 					flag = !worldObj.isBlockNormalCube(i - 1, j + n, k);
-					// System.out.println("pushOutOfBlocks n="+n);
 				}
-				// System.out.println("pushOutOfBlocks n="+n+" flag="+flag);
-				// flag = n == -1 ? false : true;
 				for (n = j1; n > -1 && flag == true; n = n - 1) {
 					flag1 = !worldObj.isBlockNormalCube(i + 1, j + n, k);
 				}
-				// flag1 = n == -1 ? false : true;
 				for (n = j1; n > -1 && flag == true; n = n - 1) {
 					flag2 = !worldObj.isBlockNormalCube(i, j - 1 + n, k);
 				}
-				// flag2 = n == -1 ? false : true;
 				for (n = j1; n > -1 && flag == true; n = n - 1) {
 					flag3 = !worldObj.isBlockNormalCube(i, j + 1 + n, k);
 				}
-				// flag3 = n == -1 ? false : true;
 				for (n = j1; n > -1 && flag == true; n = n - 1) {
 					flag4 = !worldObj.isBlockNormalCube(i, j + n, k - 1);
 				}
-				// flag4 = n == -1 ? false : true;
 				for (n = j1; n > -1 && flag == true; n = n - 1) {
 					flag5 = !worldObj.isBlockNormalCube(i, j + n, k + 1);
 				}
-				// flag5 = n == -1 ? false : true;
-				// System.out.println("pushOutOfBlocks flag="+flag+" flag1="+flag1+" flag2="+flag2+" flag3="+flag3+" flag4="+flag4+" flag5="+flag5);
 				byte byte0 = -1;
 				double d3 = 9999D;
 
@@ -619,19 +591,15 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 	protected void setSize(float f, float f1) {
 		if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm
 				&& mod_PFLM_PlayerFormLittleMaid.isModelSize
-				&& !mod_PFLM_PlayerFormLittleMaid.onlineMode) {
-			if (mod_PFLM_PlayerFormLittleMaid.textureModel[0] != null) {
-				// System.out.println("setSize Width="+mod_PFLM_PlayerFormLittleMaid.textureModel[0].getWidth()+" Height="+mod_PFLM_PlayerFormLittleMaid.textureModel[0].getHeight());
-				if (isRiding()) {
-					super.setSize(mod_PFLM_PlayerFormLittleMaid.getRidingWidth(),
-							mod_PFLM_PlayerFormLittleMaid.getRidingHeight());
-				} else {
-					super.setSize(mod_PFLM_PlayerFormLittleMaid.getWidth(),
-							mod_PFLM_PlayerFormLittleMaid.getHeight());
-				}
+				&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline) {
+			if (isRiding()) {
+				super.setSize(mod_PFLM_PlayerFormLittleMaid.getRidingWidth(),
+						mod_PFLM_PlayerFormLittleMaid.getRidingHeight());
+				return;
 			} else {
-				// System.out.println("setSize Width=0.5 Height=1.35");
-				super.setSize(0.5F, 1.35F);
+				super.setSize(mod_PFLM_PlayerFormLittleMaid.getWidth(),
+						mod_PFLM_PlayerFormLittleMaid.getHeight());
+				return;
 			}
 		} else {
 			super.setSize(f, f1);
@@ -639,16 +607,10 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 	}
 
 	public double getMountedYOffset() {
-		// System.out.println("getMountedYOffset");
 		if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm
-				&& !mod_PFLM_PlayerFormLittleMaid.onlineMode
+				&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline
 				&& mod_PFLM_PlayerFormLittleMaid.isModelSize) {
-			if (mod_PFLM_PlayerFormLittleMaid.textureModel[0] != null) {
-				return (double) height
-						* mod_PFLM_PlayerFormLittleMaid.getMountedYOffset();
-			} else {
-				return (double) height;
-			}
+			return (double) height * mod_PFLM_PlayerFormLittleMaid.getMountedYOffset();
 		}
 		return (double) height * 0.75D;
 	}
@@ -659,20 +621,13 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 			isRiding = mod_PFLM_PlayerFormLittleMaid.getIsRiding();
 		}
 		if (mod_PFLM_PlayerFormLittleMaid.isModelSize
-				&& !mod_PFLM_PlayerFormLittleMaid.onlineMode
+				&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline
 				&& !mod_PFLM_PlayerFormLittleMaid.isSmartMoving
 				&& !isRiding
 				&& !isPlayerSleeping()) {
 			if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm) {
-				if (mod_PFLM_PlayerFormLittleMaid.textureModel[0] != null) {
-					yOffset = mod_PFLM_PlayerFormLittleMaid.getyOffset();
-					// System.out.println("resetHeight yOffset="+yOffset);
-					return;
-				} else {
-					// System.out.println("resetHeight null yOffset="+yOffset);
-					yOffset = 1.17F;
-					return;
-				}
+				yOffset = mod_PFLM_PlayerFormLittleMaid.getyOffset();
+				return;
 			}
 		}
 		yOffset = 1.62F;
@@ -681,15 +636,10 @@ public class PFLM_EntityPlayerSP extends EntityClientPlayerMP {
 	public double getYOffset() {
 		if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm
 				&& mod_PFLM_PlayerFormLittleMaid.isModelSize
-				&& !mod_PFLM_PlayerFormLittleMaid.onlineMode
+				&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline
 				&& !mod_PFLM_PlayerFormLittleMaid.isSmartMoving) {
 			if (isRiding() && !worldObj.isRemote) {
-				float f = yOffset + 0.2F;
-				if (mod_PFLM_PlayerFormLittleMaid.textureModel[0] != null) {
-					f = mod_PFLM_PlayerFormLittleMaid.getRidingyOffset();
-				}
-				// Modchu_Debug.mDebug("getYOffset isRiding() f="+f);
-				return (double) (f);
+				float f = mod_PFLM_PlayerFormLittleMaid.getRidingyOffset();
 			}
 			setSize(0.5F, 1.35F);
 		}

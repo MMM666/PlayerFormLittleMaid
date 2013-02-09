@@ -47,41 +47,37 @@ public class PFLM_PlayerBase extends PlayerBase {
 		if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm) {
 			mod_PFLM_PlayerFormLittleMaid.gotcha = this;
 			if (mod_PFLM_PlayerFormLittleMaid.textureName == null) {
-				if (mod_PFLM_PlayerFormLittleMaid.defaultTexture == null) {
+				if (mod_PFLM_PlayerFormLittleMaid.textureName == null) {
 					mod_PFLM_PlayerFormLittleMaid.textureName = "default";
 				} else {
-					if (!PFLM_Gui.noSaveFlag) {
-						mod_PFLM_PlayerFormLittleMaid.setTextureName(mod_PFLM_PlayerFormLittleMaid.defaultTexture);
-					} else {
+					//if (!PFLM_Gui.noSaveFlag) {
 						mod_PFLM_PlayerFormLittleMaid.setTextureName(mod_PFLM_PlayerFormLittleMaid.textureName);
-					}
+					//} else {
+						//mod_PFLM_PlayerFormLittleMaid.setTextureName(mod_PFLM_PlayerFormLittleMaid.textureName);
+					//}
 				}
 			}
 			if (mod_PFLM_PlayerFormLittleMaid.textureArmorName == null) {
-				if (mod_PFLM_PlayerFormLittleMaid.defaultTextureArmorName == null) {
+				if (mod_PFLM_PlayerFormLittleMaid.textureArmorName == null) {
 					mod_PFLM_PlayerFormLittleMaid.setTextureArmorName(mod_PFLM_PlayerFormLittleMaid.textureName);
 				} else {
-					if (!PFLM_Gui.noSaveFlag) {
-						mod_PFLM_PlayerFormLittleMaid.setTextureArmorName(mod_PFLM_PlayerFormLittleMaid.defaultTextureArmorName);
-					} else {
+					//if (!PFLM_Gui.noSaveFlag) {
 						mod_PFLM_PlayerFormLittleMaid.setTextureArmorName(mod_PFLM_PlayerFormLittleMaid.textureArmorName);
-					}
+					//} else {
+						//mod_PFLM_PlayerFormLittleMaid.setTextureArmorName(mod_PFLM_PlayerFormLittleMaid.textureArmorName);
+					//}
 				}
 			}
 			if (mod_PFLM_PlayerFormLittleMaid.isSmartMoving) {
 				player.setSize(0.6F, 1.8F);
 				player.resetHeight();
 			} else {
-				if (mod_PFLM_PlayerFormLittleMaid.textureModel[0] != null
-						&& mod_PFLM_PlayerFormLittleMaid.isModelSize
-						&& !mod_PFLM_PlayerFormLittleMaid.onlineMode) {
-					player.setSize(
-							((ModelPlayerFormLittleMaid) mod_PFLM_PlayerFormLittleMaid.textureModel[0])
-									.getWidth(),
-							((ModelPlayerFormLittleMaid) mod_PFLM_PlayerFormLittleMaid.textureModel[0])
-									.getHeight());
+				if (mod_PFLM_PlayerFormLittleMaid.isModelSize
+						&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline) {
+					player.setSize(mod_PFLM_PlayerFormLittleMaid.getWidth(),
+							mod_PFLM_PlayerFormLittleMaid.getHeight());
 				} else {
-					if (mod_PFLM_PlayerFormLittleMaid.onlineMode
+					if (mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOnline
 							| !mod_PFLM_PlayerFormLittleMaid.isModelSize) {
 						player.setSize(0.6F, 1.8F);
 					} else {
@@ -215,7 +211,7 @@ public class PFLM_PlayerBase extends PlayerBase {
 	public void afterLocalConstructing(Minecraft minecraft, World world,
 			Session session, int i) {
 		if (mod_PFLM_PlayerFormLittleMaid.textureName != null
-				&& !mod_PFLM_PlayerFormLittleMaid.onlineMode
+				&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline
 				&& !PFLM_Gui.noSaveFlag) {
 			mod_PFLM_PlayerFormLittleMaid.setTextureValue();
 			player.skinUrl = null;
@@ -297,7 +293,7 @@ public class PFLM_PlayerBase extends PlayerBase {
 
 		if (mod_PFLM_PlayerFormLittleMaid.isPlayerForm
 				&& mod_PFLM_PlayerFormLittleMaid.isModelSize
-				&& !mod_PFLM_PlayerFormLittleMaid.onlineMode
+				&& mod_PFLM_PlayerFormLittleMaid.changeMode == PFLM_Gui.modeOffline
 				&& !mod_PFLM_PlayerFormLittleMaid.isSmartMoving
 				) {
 			if (yOffsetResetFlag
