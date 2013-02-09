@@ -7,9 +7,10 @@ import net.minecraft.client.Minecraft;
 public class PFLM_PlayerController extends PlayerControllerMP {
 
     public static EntityClientPlayerMP pflm_entityPlayersp;
-    /*b166//*/public static PFLM_EntityPlayer pflm_entityPlayer;
+    //isModelSize
+    /*b166//*/ //public static PFLM_EntityPlayer pflm_entityPlayer;
     public static PFLM_PlayerController gotcha;
-    public static PFLM_EntityRenderer erpflm;
+    //public static PFLM_EntityRenderer erpflm;
     private Minecraft mc;
     private NetClientHandler netClientHandler;
 
@@ -20,7 +21,7 @@ public class PFLM_PlayerController extends PlayerControllerMP {
     }
 
     public EntityClientPlayerMP func_78754_a(World world) {
-    	// EntityClientPlayerMPã®ç½®ãæ›ãˆ PlayerAPIæœªä½¿ç”¨
+    	// EntityClientPlayerMP‚Ì’u‚«Š·‚¦ PlayerAPI–¢g—p
     	if (!mod_PFLM_PlayerFormLittleMaid.isPlayerAPI
     			| mod_PFLM_PlayerFormLittleMaid.isPlayerAPIDebug) {
     		if (pflm_entityPlayersp != null
@@ -38,7 +39,9 @@ public class PFLM_PlayerController extends PlayerControllerMP {
     		return pflm_entityPlayersp;
     	} else {
 //-@-b166
-    		// EntityClientPlayerMPã®ç½®ãæ›ãˆ PlayerAPIç”¨
+    		// EntityClientPlayerMP‚Ì’u‚«Š·‚¦ PlayerAPI—p
+    		//isModelSize
+    		/*
     		if (mod_PFLM_PlayerFormLittleMaid.isPlayerAPI) {
     			Modchu_Debug.Debug("Replace PFLM_EntityPlayer.");
     			if (pflm_entityPlayer != null
@@ -46,13 +49,14 @@ public class PFLM_PlayerController extends PlayerControllerMP {
     			pflm_entityPlayer = new PFLM_EntityPlayer(mc, world, mc.session, netClientHandler);
     			return pflm_entityPlayer;
     		} else {
+    		*/
 //@-@b166
     			Modchu_Debug.Debug("createPlayer.");
     			return super.func_78754_a(world);
-    		/*b166//*/}
+    		/*b166//*/ //}
     	}
     }
-//-@-110
+/*
     public static boolean addRenderer()
     {
     	Map var0 = (Map)Modchu_Reflect.getFieldObject(RenderManager.class, "entityRenderMap", "o", RenderManager.instance);
@@ -69,5 +73,5 @@ public class PFLM_PlayerController extends PlayerControllerMP {
     		return true;
     	}
     }
-//@-@110
+*/
 }

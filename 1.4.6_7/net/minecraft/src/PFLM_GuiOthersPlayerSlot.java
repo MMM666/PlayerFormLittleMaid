@@ -54,7 +54,7 @@ public class PFLM_GuiOthersPlayerSlot extends GuiSlot {
 
 	@Override
 	protected void elementClicked(int i, boolean flag) {
-		//flag = true 蟾ｦ繝繝悶Ν繧ｯ繝ｪ繝�繧ｯ
+		//flag = true 左ダブルクリック
 		selected = i;
 		String s = PFLM_GuiOthersPlayerIndividualCustomizeSelect.playerList.get(i);
 		if (flag) openGuiCustomize();
@@ -135,7 +135,7 @@ public class PFLM_GuiOthersPlayerSlot extends GuiSlot {
 			boolean flag = false;
 			if(t[4] != null) {
 				if (Integer.valueOf(t[4]) == PFLM_GuiOthersPlayerIndividualCustomize.modeOthersSettingOffline) {
-					((PFLM_EntityPlayerDummy) entityliving).texture = PFLM_Texture.getTextureName(t[0], Integer.valueOf(t[2]));
+					((PFLM_EntityPlayerDummy) entityliving).texture = mod_PFLM_PlayerFormLittleMaid.textureManagerGetTextureName(t[0], Integer.valueOf(t[2]));
 					((PFLM_EntityPlayerDummy) entityliving).maidColor = Integer.valueOf(t[2]);
 					((PFLM_EntityPlayerDummy) entityliving).textureModel = (Object[]) getTextureModel(t[0], t[1]);
 					((PFLM_EntityPlayerDummy) entityliving).textureName = t[0];
@@ -160,24 +160,21 @@ public class PFLM_GuiOthersPlayerSlot extends GuiSlot {
 		GL11.glDisable(32826 /*GL_RESCALE_NORMAL_EXT*/);
 	}
 
-    private Object getTextureModel(String s1, String s2) {
-    	Object amodelPlayerFormLittleMaid = null;
-		int i = s1.lastIndexOf('_');
-		if (i > -1) {
-			s1 = s1.substring(i + 1);
+	private Object[] getTextureModel(String s1, String s2) {
+		Object amodelPlayerFormLittleMaid = null;
+		Object ltb = mod_PFLM_PlayerFormLittleMaid.getTextureBox(s1);
+		Object[] models = mod_PFLM_PlayerFormLittleMaid.getTextureBoxModels(ltb);
+		if (ltb == null) {
+			if (s1.indexOf("Biped") == -1) return mod_PFLM_PlayerFormLittleMaid.getDefaultModel();
+			ltb = mod_PFLM_PlayerFormLittleMaid.getTextureBox("Biped");
+			models = mod_PFLM_PlayerFormLittleMaid.getTextureBoxModels(ltb);
 		}
-		amodelPlayerFormLittleMaid = PFLM_Texture.modelMap.get(s1);
-		if (amodelPlayerFormLittleMaid == null) {
-			amodelPlayerFormLittleMaid = s1.indexOf("Biped") == -1 ?
-					mod_PFLM_PlayerFormLittleMaid.getDefaultModel() :
-						PFLM_Texture.modelMap.get("Biped");
-		}
-		return amodelPlayerFormLittleMaid;
+		return models;
 	}
 
 	public void deletePlayerLocalData() {
 		if (PFLM_GuiOthersPlayerIndividualCustomizeSelect.playerList.size() < 1) return;
-    	mod_PFLM_PlayerFormLittleMaid.playerLocalData.remove(PFLM_GuiOthersPlayerIndividualCustomizeSelect.playerList.get(selected));
-    	mod_PFLM_PlayerFormLittleMaid.clearPlayers();
-    }
+		mod_PFLM_PlayerFormLittleMaid.playerLocalData.remove(PFLM_GuiOthersPlayerIndividualCustomizeSelect.playerList.get(selected));
+		mod_PFLM_PlayerFormLittleMaid.clearPlayers();
+	}
 }
