@@ -83,7 +83,7 @@ public class PFLM_Gui extends GuiScreen {
 		if (textureName == null) textureName = "default";
 		if (textureModel == null) {
 			//Modchu_Debug.mDebug("PFLM_EntityPlayerDummy default");
-			textureModel = new MultiModel[3];
+			textureModel = new MultiModelBaseBiped[3];
 		}
 		if (textureArmor0 == null) textureArmor0 = new String[4];
 		if (textureArmor1 == null) textureArmor1 = new String[4];
@@ -529,6 +529,7 @@ public class PFLM_Gui extends GuiScreen {
     		imageWriteComplete = false;
     		imageWriteFail = false;
     		noSaveFlag = true;
+    		mod_PFLM_PlayerFormLittleMaid.changeColor(null);
     		return;
     	}
     	//ArmorChange
@@ -606,7 +607,7 @@ public class PFLM_Gui extends GuiScreen {
     }
 
     public void modelChange() {
-    	mod_PFLM_PlayerFormLittleMaid.setTextureValue();
+    	//mod_PFLM_PlayerFormLittleMaid.setTextureValue();
     	if (mod_PFLM_PlayerFormLittleMaid.isModelSize) {
     		closePlayerToSpawn = true;
     	}
@@ -920,7 +921,7 @@ public class PFLM_Gui extends GuiScreen {
 		if (i == 0) {
 			setTextureArmorName(textureName);
 			setArmorNumber(setModel);
-			String s1 = mod_PFLM_PlayerFormLittleMaid.setArmorTexturePackege(textureArmorName, 0);
+			String s1 = mod_PFLM_PlayerFormLittleMaid.getArmorName(textureArmorName, 0);
 			if (s1.equalsIgnoreCase("erasearmor")) s1 = "x32_QB";
 			if (s1 != null) setTextureArmorName(s1);
 			//Modchu_Debug.mDebug("setTexturePackege i="+i+" textureArmorName="+textureArmorName);
