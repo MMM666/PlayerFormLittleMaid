@@ -284,7 +284,7 @@ public class mod_PFLM_PlayerFormLittleMaid extends BaseMod
 
 	public String getVersion()
 	{
-		return "1.4.6~7-19";
+		return "1.5.1-19";
 	}
 
 	public void load()
@@ -2667,10 +2667,10 @@ public class mod_PFLM_PlayerFormLittleMaid extends BaseMod
 						(new StringBuilder()).append("PFLMWait").toString()
 						);
 			}
-
+/*//147delete
 			int ID = ModLoader.getUniqueEntityId();
-
-/*
+*///147delete
+//-@-147
 			Map map = (Map) Modchu_Reflect.getFieldObject(EntityList.class, "IDtoClassMapping");
 			int ID = -1;
 			if (map != null) {
@@ -2685,7 +2685,7 @@ public class mod_PFLM_PlayerFormLittleMaid extends BaseMod
 			} else {
 				Modchu_Debug.Debug("IDtoClassMapping map == null !!");
 			}
-*/
+//@-@147
 			if (guiMultiPngSaveButton
 					&& ID > -1) ModLoader.registerEntityID(PFLM_EntityPlayerDummy.class, "PFLM_EntityPlayerDummy", ID);
 		}

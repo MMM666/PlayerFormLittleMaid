@@ -892,9 +892,9 @@ public class PFLM_RenderPlayer extends RenderPlayer
     			GL11.glPopMatrix();
     		}
     	}
-    	if (entityplayer.playerCloakUrl != null
+    	if (entityplayer.cloakUrl != null
     			&& renderManager != null
-    			&& loadDownloadableImageTexture(entityplayer.playerCloakUrl, null)
+    			&& loadDownloadableImageTexture(entityplayer.cloakUrl, null)
 //-@-132
     			&& !entityplayer.getHasActivePotion() && !entityplayer.getHideCape()
 //@-@132
@@ -1872,7 +1872,12 @@ public class PFLM_RenderPlayer extends RenderPlayer
      * Used to render a player's name above their head
      */
     @Override
+//-@-147
+    protected void renderLivingLabel(EntityLiving entityplayer, String par2Str, double d, double d1, double d2, int i)
+//@-@147
+/*//147delete
     protected void renderName(EntityPlayer entityplayer, double d, double d1, double d2)
+*///147delete
     {
 //-@-125
     	if (mod_PFLM_PlayerFormLittleMaid.isSmartMoving) Modchu_Reflect.invokeMethod(PFLM_RenderPlayerSmart, "renderName", new Class[]{ EntityPlayer.class, double.class, double.class, double.class }, pflm_RenderPlayerSmart, new Object[]{ entityplayer, d, d1, d2 });
@@ -1880,7 +1885,7 @@ public class PFLM_RenderPlayer extends RenderPlayer
     	if(mod_PFLM_PlayerFormLittleMaid.isRenderName
     			&& renderManager != null
     			&& renderManager.renderEngine != null) {
-    		PFLM_ModelData modelDataPlayerFormLittleMaid = getPlayerData(entityplayer);
+    		PFLM_ModelData modelDataPlayerFormLittleMaid = getPlayerData((EntityPlayer) entityplayer);
     		if (modelDataPlayerFormLittleMaid == null) return;
     		double d3 = 0.0D;
     		double d4 = 0.0D;
@@ -1892,7 +1897,7 @@ public class PFLM_RenderPlayer extends RenderPlayer
     			d4 = -height * d5;
     			if (modelDataPlayerFormLittleMaid.modelScale > 0.9375F) d4 -= 0.4D * d5;
     		}
-    		super.renderName(entityplayer, d, (d1 - 1.8D) + height + d3 + d4, d2);
+    		super.renderLivingLabel(entityplayer, par2Str, d, (d1 - 1.8D) + height + d3 + d4, d2, i);
     	}
     }
 
